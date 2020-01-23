@@ -48,6 +48,8 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
  
+ private
+  
   #Storong Parameter
   def task_params
     params.require(:task).permit(:content)

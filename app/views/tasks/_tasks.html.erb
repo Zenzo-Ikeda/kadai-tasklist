@@ -1,0 +1,13 @@
+<ul class="list-unstyled">
+  <% tasks.each do |task| %>
+    <li class="media mb-6">
+        <div>
+          <p><%= task.content %></p>
+        </div>
+        <div>
+          <p><%= task.status %></p>
+        </div>
+    </li>
+  <% end %>
+  <%= paginate tasks %>
+</ul>

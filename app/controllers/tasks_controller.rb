@@ -1,12 +1,17 @@
 class TasksController < ApplicationController
   before_action :set_task , only:[:show,:edit,:update,:destroy]
-
+  before_action :require_user_logged_in ,except:[:index]
+  
   def index
-    @tasks = current_user.tasks.order(id: :desc).page(params[:page])
-    #@tasks = Task.all.page(params[:page])
+    if logged_in?
+      @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+    end
   end
   
   def show
+    unless current_user == @task.user
+      redirect_to signup_url
+    end
   end
 
   def new

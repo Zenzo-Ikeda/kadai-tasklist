@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task , only:[:show,:edit,:update,:destroy]
-  before_action :require_user_logged_in ,except:[:index]
+  before_action :check_user, only: [:show,:edit,:update,:destroy]
+  before_action :require_user_logged_in, except:[:index]
   
   def index
     if logged_in?
@@ -9,9 +10,6 @@ class TasksController < ApplicationController
   end
   
   def show
-    unless current_user == @task.user
-      redirect_to signup_url
-    end
   end
 
   def new
@@ -34,7 +32,6 @@ class TasksController < ApplicationController
   end
 
   def update
-
     if @task.update(task_params)
       flash[:success] = 'taskは正常に更新されました'
       redirect_to @task
@@ -53,12 +50,18 @@ class TasksController < ApplicationController
  
  private
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id])
   end
   
   #Storong Parameter
   def task_params
     params.require(:task).permit(:content, :status)
+  end
+  
+  def check_user
+    # redirect_to signup_url if @task.nil? || current_user != @task.user
+    redirect_to signup_url if current_user != @task&.user
+    return
   end
 
 end

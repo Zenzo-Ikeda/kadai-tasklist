@@ -60,7 +60,7 @@ class TasksController < ApplicationController
   
   def check_user
     #redirect_to signup_url if @task.nil? || current_user != @task.user
-    redirect_to login_url if current_user != @task&.user
+    redirect_to root_url if current_user != @task&.user
     return
   end
 

@@ -4,14 +4,14 @@
 
   <ul>
     <% @tasks.each do |task| %>
-      <li><%= link_to task.id, task %> : <%= task.content %>&gt<%= task.status %></li>
+      <li><%= link_to task.id, task_path(task) %> : <%= task.content %>&gt<%= task.status %></li>
     <% end %>
   </ul>
   <%= paginate @tasks %>
 
   <%= link_to '新規タスクの登録', new_task_path %>
 
-<% else %>
+<% else %>  
   <div class="center jumbotron">
     <div class="text-center">
       <h1>Welcome to the Tasklists</h1>
